@@ -1,3 +1,8 @@
+az deployment group create --resource-group <resource-group-name> --template-file main.bicep --parameters parameters.json
+
+az deployment group create --resource-group <resource-group-name> --template-file main.bicep --parameters parameters.json --mode WhatIf
+
+
 // Import the modules
 module network './networkModule.bicep' = {
   name: 'network'
