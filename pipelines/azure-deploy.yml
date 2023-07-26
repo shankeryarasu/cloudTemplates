@@ -1,5 +1,10 @@
 # we'll define the steps to deploy the Bicep templates using the Azure CLI task
-
+#replace below the placeholders
+#AzureServiceConnection
+#service-principal-id, 
+#service-principal-key, 
+#tenant-id, 
+#MyResourceGroup
 # File: azure-deploy.yml
 
 # Define the deployment stages and jobs
