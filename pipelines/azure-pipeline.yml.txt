@@ -1,0 +1,27 @@
+# File: azure-pipeline.yml
+
+trigger:
+- master
+- releases/*
+
+# Define variables or variable groups, if needed
+# variables:
+# - group: 'MyVariableGroup'
+
+# Define resources or resource groups, if needed
+# resources:
+# - repository: self
+#   clean: true
+#   fetchDepth: 1
+# - azurepipelines
+
+# Define your pipeline stages, if needed
+# stages:
+# - stage: Build
+#   jobs:
+#   - job: BuildResources
+#     ...
+
+# Reference the 'azure-deploy.yml' template
+extends:
+  template: azure-deploy.yml

@@ -1,0 +1,62 @@
+# File: azure-deploy.yml
+
+# Define the deployment stages and jobs
+stages:
+- stage: Deploy
+  jobs:
+  - job: DeployResources
+    displayName: Deploy Bicep Resources
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: AzureCLI@2
+      displayName: 'Azure Login'
+      inputs:
+        azureSubscription: '<YourAzureServiceConnection>' # Replace with your Azure service connection name
+        scriptType: 'pscore'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'az login --service-principal -u $(servicePrincipalId) -p $(servicePrincipalKey) --tenant $(tenantId)'
+
+    - task: AzureCLI@2
+      displayName: 'WhatIf Deployment'
+      inputs:
+        azureSubscription: '<YourAzureServiceConnection>' # Replace with your Azure service connection name
+        scriptType: 'pscore'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'az deployment group create --resource-group $(resourceGroupName) --template-file main.bicep --parameters parameters.json --mode WhatIf'
+
+    - task: AzureCLI@2
+      displayName: 'Actual Deployment'
+      condition: succeeded()
+      inputs:
+        azureSubscription: '<YourAzureServiceConnection>' # Replace with your Azure service connection name
+        scriptType: 'pscore'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'az deployment group create --resource-group $(resourceGroupName) --template-file main.bicep --parameters parameters.json'
+
+# Define your variable groups or template parameters here, if needed
+# variableGroups:
+# - group: 'MyVariableGroup'
+
+# Define your deployment trigger here, if needed
+# trigger:
+# - master
+# - releases/*
+
+# Define your resource group and other pipeline settings here, if needed
+# resources:
+# - repository: self
+#   clean: true
+#   fetchDepth: 1
+# - azurepipelines
+
+# Define your pipeline variables here, if needed
+# variables:
+# - name: 'resourceGroupName'
+#   value: 'MyResourceGroup'
+# - name: 'servicePrincipalId'
+#   value: 'your-service-principal-id'
+# - name: 'servicePrincipalKey'
+#   value: 'your-service-principal-key'
+# - name: 'tenantId'
+#   value: 'your-tenant-id'
