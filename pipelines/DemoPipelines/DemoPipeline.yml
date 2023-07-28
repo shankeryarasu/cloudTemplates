@@ -1,1 +1,16 @@
+trigger: none
 
+pool:
+  vmImage: ubuntu-latest
+
+jobs:
+- job:
+  steps:
+  - script: echo Hello, world!
+    displayName: 'Run a one-line script'
+  //To create a multi-line script step, use the pipe character (|) as shown in the example. After your step executes, 
+  you'll see the outputs in the pipeline log.//
+  - script: |
+      echo We'll add more steps soon.
+      echo For example, we'll add our Bicep deployment step.
+    displayName: 'Run a multi-line script'
