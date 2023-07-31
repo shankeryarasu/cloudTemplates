@@ -30,3 +30,16 @@ jobs:
       echo We'll add more steps soon.
       echo For example, we'll add our Bicep deployment step.
     displayName: 'Run a multi-line script'
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//When you need to deploy a Bicep file from a pipeline, you can use the Azure Resource Group Deployment task.//
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    connectedServiceName: 'MyServiceConnection'
+    location: 'westus3'
+    resourceGroupName: Example
+    csmFile: deploy/main.bicep
+    overrideParameters: >
+        -parameterName parameterValue
+    
